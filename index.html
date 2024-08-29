@@ -1,402 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-	<title>Krishnan Navadia | Olympix</title>
-	<link rel="stylesheet" href="dist/reveal.css" />
-	<link rel="stylesheet" href="dist/theme/black.css" id="theme" />
-	<link rel="stylesheet" href="plugin/highlight/zenburn.css" />
+    <title>Krishnan Navadia | Olympix</title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
+    <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
 	<link rel="stylesheet" href="css/layout.css" />
 	<link rel="stylesheet" href="plugin/customcontrols/style.css">
 
 
 
-	<script defer src="dist/fontawesome/all.min.js"></script>
+    <script defer src="dist/fontawesome/all.min.js"></script>
 
 	<script type="text/javascript">
 		var forgetPop = true;
 		function onPopState(event) {
-			if (forgetPop) {
+			if(forgetPop){
 				forgetPop = false;
 			} else {
 				parent.postMessage(event.target.location.href, "app://obsidian.md");
 			}
-		}
+        }
 		window.onpopstate = onPopState;
 		window.onmessage = event => {
-			if (event.data == "reload") {
+			if(event.data == "reload"){
 				window.document.location.reload();
 			}
 			forgetPop = true;
 		}
 
-		function fitElements() {
+		function fitElements(){
 			const itemsToFit = document.getElementsByClassName('fitText');
 			for (const item in itemsToFit) {
 				if (Object.hasOwnProperty.call(itemsToFit, item)) {
 					var element = itemsToFit[item];
-					fitElement(element, 1, 1000);
+					fitElement(element,1, 1000);
 					element.classList.remove('fitText');
 				}
 			}
 		}
 
-		function fitElement(element, start, end) {
+		function fitElement(element, start, end){
 
 			let size = (end + start) / 2;
 			element.style.fontSize = `${size}px`;
 
-			if (Math.abs(start - end) < 1) {
-				while (element.scrollHeight > element.offsetHeight) {
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
 					size--;
 					element.style.fontSize = `${size}px`;
 				}
 				return;
 			}
 
-			if (element.scrollHeight > element.offsetHeight) {
+			if(element.scrollHeight > element.offsetHeight){
 				fitElement(element, start, size);
 			} else {
 				fitElement(element, size, end);
-			}
+			}		
 		}
 
 
 		document.onreadystatechange = () => {
 			fitElements();
 			if (document.readyState === 'complete') {
-				if (window.location.href.indexOf("?export") != -1) {
+				if (window.location.href.indexOf("?export") != -1){
 					parent.postMessage(event.target.location.href, "app://obsidian.md");
 				}
-				if (window.location.href.indexOf("print-pdf") != -1) {
+				if (window.location.href.indexOf("print-pdf") != -1){
 					let stateCheck = setInterval(() => {
 						clearInterval(stateCheck);
 						window.print();
 					}, 250);
 				}
 			}
-		};
+	};
 
 
-	</script>
-</head>
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-<body>
-	<div class="reveal">
-		<div class="slides">
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Introduction**
 
-					#### **Introduction**
+- **Title**: LIFI Protocol Hack - July 2024
+(Understanding the Exploit, Vulnerabilities, and Prevention Strategies)
+- **Presented by**: Krishnan Navadia
+- **Date**: 29th Aug, 2024
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **Title**: LIFI Protocol Hack - July 2024
-					(Understanding the Exploit, Vulnerabilities, and Prevention Strategies)
-					- **Presented by**: Krishnan Navadia
-					- **Date**: 29th Aug, 2024
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Overview of the Hack**
 
-					#### **Overview of the Hack**
+- **Incident Date**: July 16, 2024
+- **Affected Platform**: LIFI Protocol (Ethereum and Arbitrum chains)
+- **Stolen Funds**: Approximately $9.7 million in USDC, USDT, and DAI
+- **Attack Method**: Exploitation of unchecked external call data vulnerability in the GasZipFacet module of LIFI Protocol
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **Incident Date**: July 16, 2024
-					- **Affected Platform**: LIFI Protocol (Ethereum and Arbitrum chains)
-					- **Stolen Funds**: Approximately $9.7 million in USDC, USDT, and DAI
-					- **Attack Method**: Exploitation of unchecked external call data vulnerability in the GasZipFacet
-					module of LIFI Protocol
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Details of the Exploit**
 
-					#### **Details of the Exploit**
+- **Targeted Function**: `depositToGasZipERC20` in the GasZipFacet module
+- **Vulnerability**: Unchecked external call data allowed unauthorized transactions
+- **Impact**: Enabled attackers to drain user wallets with infinite approvals
+- **Duration**: The vulnerable module was deployed only 5 days before the exploit
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **Targeted Function**: `depositToGasZipERC20` in the GasZipFacet module
-					- **Vulnerability**: Unchecked external call data allowed unauthorized transactions
-					- **Impact**: Enabled attackers to drain user wallets with infinite approvals
-					- **Duration**: The vulnerable module was deployed only 5 days before the exploit
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Vulnerable Code Analysis**
 
-					#### **Vulnerable Code Analysis**
+- **Module**: GasZipFacet
+- **Critical Function**: `depositToGasZipERC20`
+- **Flaw**: Lack of validation or restriction on external call data
+- **Consequences**: Allowed malicious actors to execute unauthorized transfers
 
-					- **Module**: GasZipFacet
-					- **Critical Function**: `depositToGasZipERC20`
-					- **Flaw**: Lack of validation or restriction on external call data
-					- **Consequences**: Allowed malicious actors to execute unauthorized transfers
+```
+function depositToGasZipERC20(address token, uint256 amount) external {
+    // Vulnerable code allowing unchecked external calls
+    (bool success, bytes memory result) = token.call(data);
+    require(success, "External call failed");
+}
+```
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					```
-					function depositToGasZipERC20(address token, uint256 amount) external {
-					// Vulnerable code allowing unchecked external calls
-					(bool success, bytes memory result) = token.call(data);
-					require(success, "External call failed");
-					}
-					```
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Root Cause of the Hack**
 
-					#### **Root Cause of the Hack**
+- **Primary Issue**: Unchecked external call data in smart contract
+- **Contributing Factors**:
+    - Human error in the deployment of the updated smart contract
+    - Insufficient auditing and testing of the new module
+    - Inadequate monitoring of infinite approval mechanisms
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **Primary Issue**: Unchecked external call data in smart contract
-					- **Contributing Factors**:
-					- Human error in the deployment of the updated smart contract
-					- Insufficient auditing and testing of the new module
-					- Inadequate monitoring of infinite approval mechanisms
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Historical Context**
 
-					#### **Historical Context**
+- **March 2022 Incident**: LIFI Protocol previously lost ~$600K due to a similar vulnerability
+- **Recurring Issue**: Repeated vulnerabilities suggest persistent flaws in the protocol’s security practices
+- **Auditing Concerns**: Questions raised about the effectiveness of security audits conducted after the 2022 hack
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **March 2022 Incident**: LIFI Protocol previously lost ~$600K due to a similar vulnerability
-					- **Recurring Issue**: Repeated vulnerabilities suggest persistent flaws in the protocol’s security
-					practices
-					- **Auditing Concerns**: Questions raised about the effectiveness of security audits conducted after
-					the 2022 hack
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Prevention Strategies**
 
-					#### **Prevention Strategies**
+- **1. Rigorous Code Audits**:
+    - Ensure thorough auditing of all code, especially for modules handling external calls.
+- **2. Input Validation**:
+    - Implement strict validation for all external inputs and calls to prevent unauthorized data manipulation.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **1. Rigorous Code Audits**:
-					- Ensure thorough auditing of all code, especially for modules handling external calls.
-					- **2. Input Validation**:
-					- Implement strict validation for all external inputs and calls to prevent unauthorized data
-					manipulation.
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+- **3. Limiting Approvals**:
+    - Enforce limits on token approvals to prevent infinite approval scenarios that attackers can exploit.
+- **4. Continuous Monitoring**:
+    - Employ real-time monitoring tools to detect and mitigate unusual transactions immediately.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **3. Limiting Approvals**:
-					- Enforce limits on token approvals to prevent infinite approval scenarios that attackers can
-					exploit.
-					- **4. Continuous Monitoring**:
-					- Employ real-time monitoring tools to detect and mitigate unusual transactions immediately.
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+- **5. Incident Response Planning**:
+    - Develop and maintain a robust incident response plan to quickly address and contain breaches.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **5. Incident Response Planning**:
-					- Develop and maintain a robust incident response plan to quickly address and contain breaches.
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **The Stolen Funds Include:**
+- 60,715 Tether: USDT Stablecoin
+- 55,001 Circle: USDC Token
+- 74,795 Tether: USDT Stablecoin
+- 49,820.78 Tether: USDT Stablecoin
+- 48,217.283218 Circle: USDC Token
+- 43.669.373674 Circle: USDC Token
+- 43,166.669857 Circle: USDC Token
+- 41,610.765269 Circle: USDC Token
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					#### **The Stolen Funds Include:**
-					- 60,715 Tether: USDT Stablecoin
-					- 55,001 Circle: USDC Token
-					- 74,795 Tether: USDT Stablecoin
-					- 49,820.78 Tether: USDT Stablecoin
-					- 48,217.283218 Circle: USDC Token
-					- 43.669.373674 Circle: USDC Token
-					- 43,166.669857 Circle: USDC Token
-					- 41,610.765269 Circle: USDC Token
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Lessons Learned**
 
-					#### **Lessons Learned**
+- **Security Importance**: Ensuring all modules are secure before deployment is crucial to maintaining platform integrity.
+- **User Awareness**: Educate users on the risks of infinite approvals and encourage regular contract approval reviews.
+- **Proactive Defense**: Continuous improvement in auditing, testing, and monitoring can prevent similar future incidents.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **Security Importance**: Ensuring all modules are secure before deployment is crucial to
-					maintaining platform integrity.
-					- **User Awareness**: Educate users on the risks of infinite approvals and encourage regular
-					contract approval reviews.
-					- **Proactive Defense**: Continuous improvement in auditing, testing, and monitoring can prevent
-					similar future incidents.
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **Conclusion**
 
-					#### **Conclusion**
+- **Summary**: The LIFI Protocol hack exposed significant vulnerabilities in smart contract design and deployment. The incident underscores the need for enhanced security measures in Web3 protocols.
+- **Next Steps**: Implementing the suggested prevention strategies could help mitigate the risks of similar exploits.
+- **Thank You**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
-					- **Summary**: The LIFI Protocol hack exposed significant vulnerabilities in smart contract design
-					and deployment. The incident underscores the need for enhanced security measures in Web3 protocols.
-					- **Next Steps**: Implementing the suggested prevention strategies could help mitigate the risks of
-					similar exploits.
-					- **Thank You**
-				</div>
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template"><!-- .slide: class="drop" -->
-				<div class=""
-					style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center"
-					absolute="true">
+#### **References**
+- https://www.immunebytes.com/blog/list-of-largest-crypto-hacks-in-2024/#Aug_2024
+- https://www.ccn.com/news/crypto/lifi-hacked-10-million/
+</div></script></section></div>
+    </div>
 
-					#### **References**
-					- https://www.immunebytes.com/blog/list-of-largest-crypto-hacks-in-2024/#Aug_2024
-					- https://www.ccn.com/news/crypto/lifi-hacked-10-million/
-				</div>
-				</script>
-			</section>
-		</div>
-	</div>
+    <script src="dist/reveal.js"></script>
 
-	<script src="dist/reveal.js"></script>
-
-	<script src="plugin/markdown/markdown.js"></script>
-	<script src="plugin/highlight/highlight.js"></script>
-	<script src="plugin/zoom/zoom.js"></script>
-	<script src="plugin/notes/notes.js"></script>
-	<script src="plugin/math/math.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
 	<script src="plugin/mermaid/mermaid.js"></script>
 	<script src="plugin/chart/chart.min.js"></script>
 	<script src="plugin/chart/plugin.js"></script>
 	<script src="plugin/customcontrols/plugin.js"></script>
 
-	<script>
-		function extend() {
-			var target = {};
-			for (var i = 0; i < arguments.length; i++) {
-				var source = arguments[i];
-				for (var key in source) {
-					if (source.hasOwnProperty(key)) {
-						target[key] = source[key];
-					}
-				}
-			}
-			return target;
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
 		}
 
-		function isLight(color) {
-			let hex = color.replace('#', '');
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
 
-			// convert #fff => #ffffff
-			if (hex.length == 3) {
-				hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
-			}
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
 
-			const c_r = parseInt(hex.substr(0, 2), 16);
-			const c_g = parseInt(hex.substr(2, 2), 16);
-			const c_b = parseInt(hex.substr(4, 2), 16);
-			const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
-			return brightness > 155;
-		}
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
 
-		var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
-		var isLight = isLight(bgColor);
-
-		if (isLight) {
-			document.body.classList.add('has-light-background');
-		} else {
-			document.body.classList.add('has-dark-background');
-		}
-
-		// default options to init reveal.js
-		var defaultOptions = {
-			controls: true,
-			progress: true,
-			history: true,
-			center: true,
-			transition: 'default', // none/fade/slide/convex/concave/zoom
-			plugins: [
-				RevealMarkdown,
-				RevealHighlight,
-				RevealZoom,
-				RevealNotes,
-				RevealMath.MathJax3,
-				RevealMermaid,
-				RevealChart,
-				RevealCustomControls,
-			],
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+        ],
 
 
-			allottedTime: 120 * 1000,
+    	allottedTime: 120 * 1000,
 
-			mathjax3: {
-				mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
-			},
-			markdown: {
-				gfm: true,
-				mangle: true,
-				pedantic: false,
-				smartLists: false,
-				smartypants: false,
-			},
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
 
-			mermaid: {
-				theme: isLight ? 'default' : 'dark',
-			},
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
 
-			customcontrols: {
-				controls: [
-				]
-			},
-		};
+		customcontrols: {
+			controls: [
+			]
+		},
+      };
 
-		// options from URL query string
-		var queryOptions = Reveal().getQueryHash() || {};
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
 
-		var options = extend(defaultOptions, { "width": 960, "height": 700, "margin": 0.04, "controls": true, "progress": true, "slideNumber": false, "transition": "slide", "transitionSpeed": "default" }, queryOptions);
-	</script>
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":false,"transition":"slide","transitionSpeed":"default"}, queryOptions);
+    </script>
 
-	<script>
-		Reveal.initialize(options);
-	</script>
-</body>
+    <script>
+      Reveal.initialize(options);
+    </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0R30XLKLR0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0R30XLKLR0');
+</script>
+  </body>
 
 
 </html>
